@@ -2424,15 +2424,17 @@ int msWCSException20(mapObj *map, const char *exceptionCode,
 
   xmlDocSetRootElement(psDoc, psRootNode);
 
-  if(EQUAL(exceptionCode, "OperationNotSupported")
-     || EQUAL(exceptionCode, "OptionNotSupported")) {
-    status = "501 Not Implemented";
-  }
-  else if (EQUAL(exceptionCode, "NoSuchCoverage")
-           || EQUAL(exceptionCode, "emptyCoverageIdList")
-           || EQUAL(exceptionCode, "InvalidAxisLabel")
-           || EQUAL(exceptionCode, "InvalidSubsetting")) {
-    status = "404 Not Found";
+  if (exceptionCode != NULL) {
+    if (EQUAL(exceptionCode, "OperationNotSupported")
+       || EQUAL(exceptionCode, "OptionNotSupported")) {
+      status = "501 Not Implemented";
+    }
+    else if (EQUAL(exceptionCode, "NoSuchCoverage")
+             || EQUAL(exceptionCode, "emptyCoverageIdList")
+             || EQUAL(exceptionCode, "InvalidAxisLabel")
+             || EQUAL(exceptionCode, "InvalidSubsetting")) {
+      status = "404 Not Found";
+    }
   }
 
   msIO_setHeader("Status", "%s", status);
